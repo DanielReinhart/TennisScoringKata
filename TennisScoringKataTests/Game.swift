@@ -2,7 +2,15 @@ import Foundation
 
 //this class represents a single tennis game.
 class Score {
-    var score: Int = 0
+   private(set) var score: Int = 0
+    
+    func increase() {
+        if score == 30 {
+            score += 10
+        } else {
+            score += 15
+        }
+    }
 }
 
 class Game  {
@@ -19,19 +27,11 @@ class Game  {
     fileprivate var servingPlayerScore = Score()
     fileprivate var receivingPlayerScore = Score()
 
-    fileprivate func updateScore(withScore s: Score) {
-        if s.score == 30 {
-            s.score += 10
-        } else {
-            s.score += 15
-        }
-    }
-    
     func servingPlayerWinPoint() {
-        updateScore(withScore: servingPlayerScore)
+        servingPlayerScore.increase()
     }
 
     func receivingPlayerWinPoint() {
-        updateScore(withScore: receivingPlayerScore)
+        receivingPlayerScore.increase()
     }
 }

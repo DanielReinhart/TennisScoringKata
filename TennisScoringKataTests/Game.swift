@@ -1,34 +1,37 @@
 import Foundation
 
 //this class represents a single tennis game.
+class Score {
+    var score: Int = 0
+}
 
-class Game : NSObject {
+class Game  {
     var score: String {
         get {
-            if "\(servingPlayerScore) - \(receivingPlayerScore)" == "40 - 40" {
+            if "\(servingPlayerScore.score) - \(receivingPlayerScore.score)" == "40 - 40" {
                 return "Deuce"
             } else {
-                return "\(servingPlayerScore) - \(receivingPlayerScore)"
+                return "\(servingPlayerScore.score) - \(receivingPlayerScore.score)"
             }
         }
     }
 
-    fileprivate var servingPlayerScore : Int = 0
-    fileprivate var receivingPlayerScore : Int = 0
+    fileprivate var servingPlayerScore = Score()
+    fileprivate var receivingPlayerScore = Score()
 
-    func servingPlayerWinPoint() {
-        if servingPlayerScore == 30 {
-            servingPlayerScore += 10
+    fileprivate func updateScore(withScore s: Score) {
+        if s.score == 30 {
+            s.score += 10
         } else {
-            servingPlayerScore += 15
+            s.score += 15
         }
+    }
+    
+    func servingPlayerWinPoint() {
+        updateScore(withScore: servingPlayerScore)
     }
 
     func receivingPlayerWinPoint() {
-        if receivingPlayerScore == 30 {
-            receivingPlayerScore += 10
-        } else {
-            receivingPlayerScore += 15
-        }
+        updateScore(withScore: receivingPlayerScore)
     }
 }

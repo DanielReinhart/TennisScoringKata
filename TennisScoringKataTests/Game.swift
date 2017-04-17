@@ -87,7 +87,7 @@ class Game  {
     private func currentGameScore(servingPlayerScore: Score, receivingPlayerScore: Score) -> String {
         if scoreIsDeuce(score1: servingPlayerScore, score2: receivingPlayerScore) {
             return "Deuce"
-        } else if servingPlayerScore.points == .greaterThanThreePoints && receivingPlayerScore.points == .threePoints {
+        } else if playerHasAdvantage(score1: servingPlayerScore, score2: receivingPlayerScore) {
             if servingPlayerScore.totalPointsWon > receivingPlayerScore.totalPointsWon {
                 return "Adv - 40"
             } else {
@@ -99,11 +99,18 @@ class Game  {
     }
 
     private func scoreIsDeuce(score1: Score, score2: Score) -> Bool {
-        if servingPlayerScore.points == .threePoints && receivingPlayerScore.points == .threePoints {
+        if servingPlayerScore.points == .threePoints && receivingPlayerScore.points == .threePoints ||
+            (servingPlayerScore.points == .greaterThanThreePoints && receivingPlayerScore.points == .greaterThanThreePoints &&
+            servingPlayerScore.totalPointsWon == receivingPlayerScore.totalPointsWon) {
             return true
         } else {
             return false
         }
+    }
+
+    private func playerHasAdvantage(score1: Score, score2: Score) -> Bool {
+        return (score1.points == .greaterThanThreePoints && score2.points == .threePoints) ||
+            (score1.points == .threePoints && score2.points == .greaterThanThreePoints)
     }
 
 

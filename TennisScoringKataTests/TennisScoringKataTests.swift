@@ -101,4 +101,54 @@ class TennisScoringKataTests: XCTestCase {
         XCTAssertEqual(game.score, "Adv - 40")
 
     }
+
+    func testReceivingPlayerHasAdvantage() {
+        let game = Game()
+
+        game.receivingPlayerWinPoint()
+        game.receivingPlayerWinPoint()
+        game.receivingPlayerWinPoint()
+
+        game.servingPlayerWinPoint()
+        game.servingPlayerWinPoint()
+        game.servingPlayerWinPoint()
+        game.receivingPlayerWinPoint()
+
+        XCTAssertEqual(game.score, "40 - Adv")
+        
+    }
+
+    func testGameWentBackToDeuceAfterServingPlayerAdv() {
+        let game = Game()
+
+        game.receivingPlayerWinPoint()
+        game.receivingPlayerWinPoint()
+        game.receivingPlayerWinPoint()
+
+        game.servingPlayerWinPoint()
+        game.servingPlayerWinPoint()
+        game.servingPlayerWinPoint()
+        game.servingPlayerWinPoint()
+        game.receivingPlayerWinPoint()
+
+        XCTAssertEqual(game.score, "Deuce")
+        
+    }
+
+    func testGameWentBackToDeuceAfterReceivingPlayerAdv() {
+        let game = Game()
+
+        game.receivingPlayerWinPoint()
+        game.receivingPlayerWinPoint()
+        game.receivingPlayerWinPoint()
+
+        game.servingPlayerWinPoint()
+        game.servingPlayerWinPoint()
+        game.servingPlayerWinPoint()
+        game.receivingPlayerWinPoint()
+        game.servingPlayerWinPoint()
+
+        XCTAssertEqual(game.score, "Deuce")
+        
+    }
 }

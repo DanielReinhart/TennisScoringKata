@@ -93,6 +93,13 @@ class Game  {
             } else {
                 return "40 - Adv"
             }
+        } else if playerWonGame(score1: servingPlayerScore, score2: receivingPlayerScore) {
+            if servingPlayerScore.totalPointsWon > receivingPlayerScore.totalPointsWon {
+                return "Game - Serving Player"
+            } else {
+                return "Game - Receiving Player"
+            }
+
         } else {
             return "\(servingPlayerScore.score()) - \(receivingPlayerScore.score())"
         }
@@ -111,6 +118,11 @@ class Game  {
     private func playerHasAdvantage(score1: Score, score2: Score) -> Bool {
         return (score1.points == .greaterThanThreePoints && score2.points == .threePoints) ||
             (score1.points == .threePoints && score2.points == .greaterThanThreePoints)
+    }
+
+    private func playerWonGame(score1: Score, score2: Score) -> Bool {
+        return (score1.points == .greaterThanThreePoints && (score2.points != .greaterThanThreePoints || score2.points != .threePoints)) ||
+               (score2.points == .greaterThanThreePoints && (score1.points != .greaterThanThreePoints || score1.points != .threePoints))
     }
 
 

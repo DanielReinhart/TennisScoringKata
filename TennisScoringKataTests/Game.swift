@@ -85,21 +85,20 @@ class Game  {
     }
 
     private func currentGameScore(servingPlayerScore: Score, receivingPlayerScore: Score) -> String {
-        if scoreIsDeuce(score1: servingPlayerScore, score2: receivingPlayerScore) {
-            return "Deuce"
+        if playerWonGame(score1: servingPlayerScore, score2: receivingPlayerScore) {
+            if servingPlayerScore.totalPointsWon > receivingPlayerScore.totalPointsWon {
+                return "Game - Serving Player"
+            } else {
+                return "Game - Receiving Player"
+            }
         } else if playerHasAdvantage(score1: servingPlayerScore, score2: receivingPlayerScore) {
             if servingPlayerScore.totalPointsWon > receivingPlayerScore.totalPointsWon {
                 return "Adv - 40"
             } else {
                 return "40 - Adv"
             }
-        } else if playerWonGame(score1: servingPlayerScore, score2: receivingPlayerScore) {
-            if servingPlayerScore.totalPointsWon > receivingPlayerScore.totalPointsWon {
-                return "Game - Serving Player"
-            } else {
-                return "Game - Receiving Player"
-            }
-
+        } else if scoreIsDeuce(score1: servingPlayerScore, score2: receivingPlayerScore) {
+            return "Deuce"
         } else {
             return "\(servingPlayerScore.score()) - \(receivingPlayerScore.score())"
         }
@@ -121,8 +120,13 @@ class Game  {
     }
 
     private func playerWonGame(score1: Score, score2: Score) -> Bool {
-        return (score1.points == .greaterThanThreePoints && (score2.points != .greaterThanThreePoints || score2.points != .threePoints)) ||
-               (score2.points == .greaterThanThreePoints && (score1.points != .greaterThanThreePoints || score1.points != .threePoints))
+        if (score1.totalPointsWon > 3 && score2.totalPointsWon < 3) ||
+           (score2.totalPointsWon > 3 && score1.totalPointsWon < 3) ||
+           ((score1.totalPointsWon >= 3 && score2.totalPointsWon >= 3) && abs(score1.totalPointsWon - score2.totalPointsWon) >= 2) {
+            return true
+        }
+        return false
+
     }
 
 
